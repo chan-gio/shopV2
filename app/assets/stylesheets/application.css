@@ -1,0 +1,194 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination li {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.pagination a,
+.pagination .previous,
+.pagination .next
+{
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #000000;
+  text-decoration: none;
+  transition: opacity 0.3s ease; /* Add a smooth transition effect */
+}
+.pagination .current{
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #3da8ff;
+  color: #ffffff;
+  text-decoration: none;
+  transition: opacity 0.3s ease; /* Add a smooth transition effect */
+}
+
+
+.pagination span {
+  display: none;
+}
+
+
+
+/* Hover effect */
+.pagination a:hover,
+.pagination .previous:hover,
+.pagination .next:hover {
+  background-color: #f5f5f5;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Add a subtle box shadow */
+  color: #0056b3; /* Change text color on hover */
+}
+
+  /* Đặt kiểu cho danh sách sản phẩm và tổng giá trị */
+  #cart-list {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  #total-price {
+    /* Thêm kiểu để nó nằm bên phải */
+    text-align: right;
+  }
+
+  /* Đặt kiểu cho các nút và link */
+  .btn {
+    margin-top: 10px; /* Khoảng cách giữa các nút và link */
+  }
+  .font{
+    font-family: sans-serif
+  }
+  .select-form{
+    display:flex;
+    justify-content: space-between;
+    gap: 50px;  
+  }
+  .container{
+    max-width: 100%;
+}
+.view-cart-btn{
+  max-width: 50px;
+  max-height: 50px;
+}
+.icon{
+  max-width: 100px;
+  max-height: 50px;
+  padding-left: 20px;
+}
+
+.form-check-input {
+  width: 20px;
+  height: 20px;
+}
+.form-check{
+  border: 1px solid #000000;
+  width: auto;
+  height: 60px; 
+  border-radius:20px ;
+  display: flex;
+  align-items: center;
+  padding-left: 40px;
+}
+.Payment_label{
+  padding-left: 50px;
+}
+.mb-4{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+.footer {
+  background-color: black; /* Màu đen */
+  bottom: 0;
+  left: 0;
+  width: 100%; /* Chiều rộng 100% */
+  height: 260px; /* Thêm padding để thanh div trở nên dài hơn */
+  color: white; /* Màu chữ trắng để tương phản với màu đen của nền */
+  margin-top: 20px 
+}
+.receipt_page {
+  display: flex;
+  justify-content: space-between;
+}
+
+.icon {
+  text-align: left; /* Căn lề icon về bên trái */
+}
+
+.receipt_info {
+  text-align: right; /* Căn lề hoá đơn và ngày lập về bên phải */
+}
+
+    
+    .receipt-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+    }
+
+    .receipt-section {
+      margin-bottom: 70px; /* Adjust the margin as needed */
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    #total-price {
+      font-weight: bold;
+    }
+/* Thêm mã CSS sau vào file CSS của bạn */
+nav.navbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.navbar-expand-lg .navbar-toggler {
+  color: #fff; /* Đổi màu icon toggle nếu cần */
+}
+
+.navbar-expand-lg .navbar-nav {
+  text-align: center; /* Căn giữa các mục trong thanh navbar */
+}
+
+.navbar-expand-lg .navbar-nav .nav-item {
+  margin: 0 10px; /* Khoảng cách giữa các mục trong thanh navbar */
+}
+
+.navbar-expand-lg .navbar-collapse {
+  text-align: center; /* Căn giữa nội dung thanh navbar khi mở rộng */
+}
+.title{
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+}
+.wrapper{
+  padding-top: 130px;
+  padding-left: 100px;
+}

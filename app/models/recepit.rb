@@ -1,0 +1,2 @@
+class Recepit < ApplicationRecord
+end

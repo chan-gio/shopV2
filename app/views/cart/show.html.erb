@@ -1,0 +1,293 @@
+  <div class='wrapper'>
+  <!DOCTYPE html>
+  <html lang="vn">
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <div style="display: flex">
+    <div style="flex:2; padding-right:30px">
+
+    <h1 class = "font">Thông tin vận chuyển</h1>
+
+    <div class="mb-3">
+    <label for="name" class="form-label">Họ và tên:</label>
+    <input type="text" class="form-control" id="name" placeholder="duck">
+  </div>
+  <div class="mb-3">
+    <label for="phone" class="form-label">Số điện thoại:</label>
+    <input type="text" class="form-control" id="phone" placeholder="123456789">
+  </div>
+  <div class="mb-3">
+    <label for="email" class="form-label">Email:</label>
+    <input type="email" class="form-control" id="email" placeholder="name@gmail.com">
+  </div>
+  <div class="mb-3">
+    <label for="address" class="form-label">Địa chỉ:</label>
+    <input type="text" class="form-control" id="address" placeholder="55 hang bun, Ba Dinh, Ha Noi">
+  </div>
+  <div class="select-form">
+  <select class="form-select" aria-label="Default select example">
+    <option selected>Open this select menu</option>
+    <option value="1">Ha Noi</option>
+    <option value="2">An Giang</option>
+    <option value="3">Three</option>
+  </select>
+  <select class="form-select" aria-label="Default select example">
+    <option selected>Open this select menu</option>
+    <option value="1">One</option>
+    <option value="2">Two</option>
+    <option value="3">Three</option>
+  </select>
+  <select class="form-select" aria-label="Default select example">
+    <option selected>Open this select menu</option>
+    <option value="1">One</option>
+    <option value="2">Two</option>
+    <option value="3">Three</option>
+  </select>
+  </div>
+    <div class="mb-3">
+      <label for="note" class="form-label">Ghi chú:</label>
+      <input type="text" class="form-control" id="note" placeholder="somethings....">
+    </div>
+      <h1 class = "font">Hình thức thanh toán</h1>
+      <div class="mb-4">
+        
+      <div class="form-check" onclick="selectRadio('Payment_method1')">
+      <input class="form-check-input" type="radio" name="Payment_method" id="Payment_method1">
+      <img src="http://127.0.0.1:3000/assets/logo-zalopay.svg" class="icon">
+      <label class="Payment_label" for="Payment_method1">
+        ZaloPay
+      </label>
+      </div>
+
+    <div class="form-check" onclick="selectRadio('Payment_method2')">
+      <input class="form-check-input" type="radio" name="Payment_method" id="Payment_method2" checked>
+      <img src="http://127.0.0.1:3000/assets/momo-icon.webp" class="icon">
+      <label class="Payment_label" for="Payment_method2">
+        MoMo
+      </label>
+    </div>
+
+    <div class="form-check" onclick="selectRadio('Payment_method3')">
+      <input class="form-check-input" type="radio" name="Payment_method" id="Payment_method3">
+      <img src="http://127.0.0.1:3000/assets/qrcodee.png" class="icon">
+      <label class="Payment_label" for="Payment_method3">
+        QR code bank 
+      </label>
+    </div>
+
+    <div class="form-check" onclick="selectRadio('Payment_method4')">
+      <input class="form-check-input" type="radio" name="Payment_method" id="Payment_method4" checked>
+        <img src="http://127.0.0.1:3000/assets/vnpay.webp" class="icon">
+      <label class="Payment_label" for="Payment_method4">
+        VNPay QR
+      </label>
+    </div>
+  <div class="form-check" onclick="selectRadio('Payment_method5')">
+      <input class="form-check-input" type="radio" name="Payment_method" id="Payment_method5">
+      <img src="http://127.0.0.1:3000/assets/pwd.png" class="icon">
+      <label class="Payment_label" for="Payment_method5">
+        Thanh toán khi nhận hàng
+      </label>
+    </div>
+
+    </div>
+    </div>
+     <div style="flex:1;border-left: 1px solid #ccc;padding-left:30px">
+        <h2 class="font">Giỏ hàng</h2>
+        <!-- Display the list of items in the cart -->
+        <ul id="cart-list"></ul>
+        <!-- Display total price -->
+        <p>Total Price: <span id="total-price"></span>đ</p>
+        <!-- Button to clear the cart -->
+        <button id="clear-cart-btn" class="btn btn-primary">Xoá giỏ hàng</button>
+        <!-- Link to check out -->
+        <button id="receipt-btn" class="btn btn-primary" onclick="redirectToPayment()">Thanh toán</button>
+      </div>
+    </div>
+
+<script>
+            function selectRadio(radioId) {
+                document.getElementById(radioId).checked = true;
+            }
+
+            function redirectToPayment() {
+                var selectedPaymentMethod = getSelectedPaymentMethod();
+
+                switch (selectedPaymentMethod) {
+                    case 'Payment_method1':
+                        window.location.href = 'http://127.0.0.1:3000/payment_method/zalo';
+                        break;
+                    case 'Payment_method2':
+                        window.location.href = 'http://127.0.0.1:3000/payment_method/momo';
+                        break;
+                    case 'Payment_method3':
+                        window.location.href = 'http://127.0.0.1:3000/payment_method/qrcode';
+                        break;
+                    case 'Payment_method4':
+                        window.location.href = 'http://127.0.0.1:3000/payment_method/vnpay';
+                        break;
+                    case 'Payment_method5':
+                        window.location.href = 'http://127.0.0.1:3000/receipt';
+                        break;
+                    default:
+                        // Handle default case
+                        break;
+                }
+            }
+
+            function getSelectedPaymentMethod() {
+                var radioButtons = document.getElementsByName('Payment_method');
+                for (var i = 0; i < radioButtons.length; i++) {
+                    if (radioButtons[i].checked) {
+                        return radioButtons[i].id;
+                    }
+                }
+                return null;
+            }
+
+            function updateDisplay() {
+                // Display user information
+                var inputs = ['name', 'phone', 'address', 'note', 'email'];
+                inputs.forEach(function (input) {
+                    document.getElementById(input).value = (JSON.parse(localStorage.getItem('userInfo')) || {})[input] || '';
+                });
+
+                // Display cart details
+                var cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
+                var cartList = document.getElementById('cart-list');
+                var totalPriceElement = document.getElementById('total-price');
+
+                if (!cartList || !totalPriceElement) {
+                  console.error('Cart list or total price element not found.');
+                  return;
+                }
+
+                cartList.innerHTML = '';
+                var total = 0;
+
+                cartProducts.forEach(function (product, index) {
+                  addProductToCartList(product, index);
+                  total += product.price * product.quantity; // Calculate the total price
+                });
+
+                totalPriceElement.textContent = total; // Display the total price
+
+                // Save the total price to localStorage
+                localStorage.setItem('totalPrice', total);
+              }
+            function addProductToCartList(product, index) {
+                var cartList = document.getElementById('cart-list');
+                var listItem = document.createElement('li');
+                listItem.textContent = `${product.name} - Size: ${product.size}, Color: ${product.color}, Quantity: ${product.quantity}, Price: ${product.price}`;
+
+                var removeButton = document.createElement('button');
+                removeButton.textContent = 'X';
+                removeButton.className = 'btn btn-danger';
+                removeButton.dataset.index = index;
+                removeButton.addEventListener('click', function () {
+                    var indexToRemove = parseInt(removeButton.dataset.index, 10);
+                    cartProducts.splice(indexToRemove, 1);
+                    localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
+                    updateDisplay(); // Update the display after removing an item
+                });
+
+                listItem.appendChild(removeButton);
+                cartList.appendChild(listItem);
+            }
+
+            document.addEventListener('turbo:load', function () {
+                try {
+                    updateDisplay(); // Update the display on turbo:load
+                    // The rest of your code remains the same...
+                } catch (error) {
+                    console.error('Error displaying cart:', error);
+                }
+            });
+
+            document.addEventListener('DOMContentLoaded', function () {
+                // Add event listeners to capture user input
+                var inputs = ['name', 'phone', 'address', 'note', 'email'];
+                inputs.forEach(function (input) {
+                    document.getElementById(input).addEventListener('input', saveUserInfoAndRefresh);
+                });
+
+                var paymentDivs = document.querySelectorAll('.form-check');
+                paymentDivs.forEach(function (div) {
+                    div.addEventListener('click', savePaymentMethodAndRefresh);
+                });
+
+                function saveUserInfoAndRefresh() {
+                    console.log('Saving user info...');
+                    saveUserInfo();
+                    updateDisplay();
+                }
+
+                function savePaymentMethodAndRefresh(event) {
+                    console.log('Saving payment method...');
+                    var selectedMethod = event.currentTarget.getAttribute('data-method');
+                    selectPaymentMethod(selectedMethod);
+                    updateDisplay();
+                }
+
+                function selectPaymentMethod(method) {
+                    // Find the corresponding radio button and check it
+                    var radio = document.querySelector(`[data-method="${method}"] input[type="radio"]`);
+                    if (radio) {
+                        radio.checked = true;
+                    }
+
+                    // Save the selected payment method
+                    var selectedPaymentMethod = getSelectedPaymentMethod();
+                    savePaymentMethod(selectedPaymentMethod);
+                }
+
+                 function saveUserInfo() {
+                    var userInfo = inputs.reduce(function (acc, input) {
+                      acc[input] = document.getElementById(input).value;
+                      return acc;
+                    }, {});
+
+                    // Add the total price to userInfo
+                    userInfo.totalPrice = localStorage.getItem('totalPrice') || 0;
+
+                    localStorage.setItem('userInfo', JSON.stringify(userInfo));
+                  } 
+
+                function savePaymentMethod(selectedPaymentMethod) {
+                    // Retrieve existing userInfo from localStorage
+                    var userInfo = JSON.parse(localStorage.getItem('userInfo')) || {};
+
+                    // Add or update the payment method information in userInfo
+                    userInfo.paymentMethod = {
+                        id: selectedPaymentMethod,
+                        name: getPaymentMethodName(selectedPaymentMethod)
+                    };
+
+                    // Save the updated userInfo back to localStorage
+                    localStorage.setItem('userInfo', JSON.stringify(userInfo));
+                }
+
+                function getPaymentMethodName(paymentMethodId) {
+                    // Add logic to map payment method IDs to names
+                    switch (paymentMethodId) {
+                        case 'Payment_method1':
+                            return 'ZaloPay';
+                        case 'Payment_method2':
+                            return 'MoMo';
+                        case 'Payment_method3':
+                            return 'QR code bank';
+                        case 'Payment_method4':
+                            return 'VNPay QR';
+                        case 'Payment_method5':
+                            return 'Thanh toán khi nhận hàng';
+                        default:
+                            return '';
+                    }
+                }
+            });
+        </script>
+  
+  </body>
+</html>
+</div>

@@ -1,0 +1,140 @@
+<div class='wrapper'>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Page Title</title>
+</head>
+
+<body>
+
+  <div class="receipt-container">
+    <div class="receipt-section receipt_page">
+      <h1 class="icon">icon</h1>
+      <div class="receipt_info">
+        <h1>Hoá đơn</h1>
+        <p>Ngày lập</p>
+      </div>
+    </div>
+
+    <div class="receipt-section customer-info">
+      <h2>Người nhận </h2>
+      <p id="customer-name">Tên khách hàng: <span></span></p>
+      <p id="customer-phone">Điện thoại khách hàng: <span></span></p>
+      <p id="customer-address">Địa chỉ khách hàng: <span></span></p>
+      <p id="customer-note">Ghi chú khách hàng: <span></span></p>
+      <p id="customer-payment-method">Phương thức thanh toán: <span></span></p>
+    </div>
+
+    <div class="receipt-section">
+      <h1>Sản phẩm </h1>
+      <table id="receipt-table">
+        <thead>
+          <tr>
+            <th>Tên sản phẩm</th>
+            <th>Size</th>
+            <th>Màu sắc</th>
+            <th>Số lượng</th>
+            <th>Đơn giá</th>
+          </tr>
+        </thead>
+        <tbody id="receipt-body"></tbody>
+      </table>
+    </div>
+
+    <div class="receipt-section">
+      <!-- Display total price -->
+      <p>Total Price: <span id="total-price"></span>đ</p>
+    </div>
+  </div>
+
+ <script>
+document.addEventListener('DOMContentLoaded', function () {
+  // DOM elements
+  var receiptBody = document.getElementById('receipt-body');
+  var totalPriceElement = document.getElementById('total-price');
+  var form = document.querySelector('form');
+  var userInfoNameSpan = document.getElementById('customer-name').querySelector('span');
+  var userInfoPhoneSpan = document.getElementById('customer-phone').querySelector('span');
+  var userInfoAddressSpan = document.getElementById('customer-address').querySelector('span');
+  var userInfoNoteSpan = document.getElementById('customer-note').querySelector('span');
+  var userInfoPaymentMethodSpan = document.getElementById('customer-payment-method').querySelector('span');
+
+  // Local storage data
+  var cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
+  var userInfo = JSON.parse(localStorage.getItem('userInfo')) || {};
+  // Lấy dữ liệu từ localStorage
+  var saveUserInfo = localStorage.getItem('userInfo');
+  var totalPrice = totalPriceElement.innerText;
+
+  // Gửi dữ liệu đến server bằng Ajax
+  $.ajax({
+    type: 'POST',
+    url: '/receipt/save_data', // Đảm bảo URL này phản ánh tên controller và action của bạn
+    contentType: 'application/json', // Đặt loại nội dung là JSON
+    data:saveUserInfo,
+    success: function(response) {
+      console.log('Server response:', response);
+      // Xử lý phản hồi từ server (nếu cần)
+    }
+  });
+
+  // Display initial receipt data
+  updateReceiptDisplay();
+
+  // Function to update receipt display
+  function updateReceiptDisplay() {
+    if (!receiptBody || !totalPriceElement || !form) {
+      console.error('Receipt body, total price element, or form not found.');
+      return;
+    }
+
+    receiptBody.innerHTML = '';
+    var total = 0;
+
+    cartProducts.forEach(function (product, index) {
+      addProductToReceiptList(product, index);
+      total += product.price * product.quantity;
+    });
+
+    totalPriceElement.textContent = total;
+
+    // Display user information from localStorage
+    userInfoNameSpan.textContent = userInfo.name || '';
+    userInfoPhoneSpan.textContent = userInfo.phone || '';
+    userInfoAddressSpan.textContent = userInfo.address || '';
+    userInfoNoteSpan.textContent = userInfo.note || '';
+    userInfoPaymentMethodSpan.textContent = userInfo.paymentMethod ? userInfo.paymentMethod.name : '';
+  }
+  // Log userInfo for debugging
+  console.log('User Info:', userInfo);
+
+  // Function to add product to the receipt list
+  function addProductToReceiptList(product, index) {
+    if (!receiptBody) {
+      console.error('Receipt body not found.');
+      return;
+    }
+
+    var row = receiptBody.insertRow();
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+    var cell5 = row.insertCell(4);
+
+    cell1.textContent = product.name;
+    cell2.textContent = product.size;
+    cell3.textContent = product.color;
+    cell4.textContent = product.quantity;
+    cell5.textContent = product.price * product.quantity;
+  }
+});
+
+</script>
+  </body>
+
+  </html>
+</div>

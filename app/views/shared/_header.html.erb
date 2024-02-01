@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slideshow</title>
+  <style>
+    .header {
+      position: relative;
+      overflow: hidden;
+    }
+
+    #slideshow-container {
+      max-width: 100%;
+      position: relative;
+      margin: auto;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+
+    .mySlides {
+      display: none;
+    }
+
+    .mySlides img {
+      width: auto;
+      height: 700px;
+      border-radius: 8px;
+    }
+
+    .next {
+      position: absolute;
+      top: 50%;
+      width: 5%; /* Thay đổi kích thước của nút */
+      padding: 16px;
+      margin-top: -25px;
+      font-size: 20px;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.5);
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      right: 0
+    }
+    .prev{
+      position: absolute;
+      top: 50%;
+      width: 5%; /* Thay đổi kích thước của nút */
+      padding: 16px;
+      margin-top: -25px;
+      font-size: 20px;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.5);
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      left: 0
+    }
+
+
+    .prev:hover,
+    .next:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    @keyframes fade {
+      from {
+        opacity: 0.4;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .mySlides.fade {
+      animation: fade 1.5s ease-in-out;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <div id="slideshow-container">
+      <div class="mySlides fade">
+        <img src="http://127.0.0.1:3000/assets/ss1.png" alt="Slide 1">
+      </div>
+
+      <div class="mySlides fade">
+        <img src="http://127.0.0.1:3000/assets/ss2.jpg" alt="Slide 2">
+      </div>
+       <div class="mySlides fade">
+        <img src="http://127.0.0.1:3000/assets/ss3.jpg" alt="Slide 1">
+      </div>
+
+      <div class="mySlides fade">
+        <img src="http://127.0.0.1:3000/assets/ss4.jpg" alt="Slide 2">
+      </div>
+       <div class="mySlides fade">
+        <img src="http://127.0.0.1:3000/assets/ss5.jpg" alt="Slide 1">
+      </div>
+
+      <div class="mySlides fade">
+        <img src="http://127.0.0.1:3000/assets/ss6.jpg" alt="Slide 2">
+      </div>
+       <div class="mySlides fade">
+        <img src="http://127.0.0.1:3000/assets/ss7.jpg" alt="Slide 1">
+      </div>
+
+      <!-- Thêm nhiều ảnh slide khác nếu cần -->
+
+      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+  </div>
+
+ <script>
+  var slideIndex = 0;
+  var slideInterval;
+
+  showSlides();
+
+  function plusSlides(n) {
+    showSlides(slideIndex += n);
+  }
+
+  function showSlides() {
+    var i;
+    var slides = document.getElementsByClassName("mySlides");
+
+    for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+    }
+
+    slideIndex++;
+
+    if (slideIndex > slides.length) {
+      slideIndex = 1;
+    }
+
+    slides[slideIndex - 1].style.display = "block";
+    
+    // Dừng interval nếu đang chạy
+    if (slideInterval) {
+      clearInterval(slideInterval);
+    }
+
+    // Đặt timeout và lưu lại ID của interval
+    slideInterval = setTimeout(function () {
+      showSlides();
+    }, 1600); // Chuyển slide sau mỗi 3 giây
+  }
+</script>
+
+
+</body>
+
+</html>

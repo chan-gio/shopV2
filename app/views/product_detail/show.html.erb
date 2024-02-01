@@ -1,0 +1,130 @@
+<div class='wrapper'>
+<div class="text-center">
+  <div style="float: left; margin-right: 20px;">
+    <% if @product.image.present? && File.exist?("app/assets/images/#{@product.image}") %>
+      <%= image_tag @product.image, class: "card-img-top" %>
+    <% else %>
+      <%= image_tag "default_image.jpg", class: "card-img-top" %>
+    <% end %>
+  </div>
+
+  <div style="float: left; text-align: left;">
+    <p class="form-label">Name: <%= @product.name %></p>
+    <p class="form-label">Price: <%= @product.price %>đ</p>
+
+    <p class="form-label">
+      Size:
+      <div>
+        <% @product.sizes.each do |size| %>
+          <%= radio_button_tag 'size', size, class: 'form-check-input', onchange: 'updateColors()' %>
+          <%= label_tag size, size, class: 'form-check-label' %>
+        <% end %>
+      </div>
+    </p>
+
+    <p class="form-label">
+      Color:
+      <div id="color-options">
+        <% @product.colors.each do |color| %>
+         <%= radio_button_tag 'color', color, class: 'form-check-input', id: "color_#{color}" %>
+  <%= label_tag color, color, class: 'form-check-label', id: 'text', for: "color_#{color}" %>
+<% end %>
+      </div>
+    </p>
+
+    <!-- Add quantity input field -->
+    <p class="form-label">
+      Quantity:
+      <input type="number" id="quantity" value="1" min="1">
+    </p>
+
+    <button id="add-to-cart-btn" class="btn btn-primary">Add to Cart</button>
+  </div>
+
+  <div style="clear: both;"></div>
+
+<script>
+  document.body.addEventListener('click', function (event) {
+    if (event.target.matches('#add-to-cart-btn')) {
+      handleAddToCartClick();
+    }
+  });
+
+  function updateColors() {
+    var selectedSize = document.querySelector('input[name="size"]:checked').value;
+    var product_name = "<%= @product.name %>"; // Replace with the actual way to get the product ID
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        var availableColors = JSON.parse(xhr.responseText);
+        updateColorOptions(availableColors);
+      }
+    };
+    xhr.open("GET", "/get_available_colors?product_name=" + product_name + "&size=" + selectedSize, true);
+    xhr.send();
+  }
+
+  function updateColorOptions(availableColors) {
+    var colorOptions = document.getElementById('color-options').getElementsByTagName('input');
+
+    for (var i = 0; i < colorOptions.length; i++) {
+      var color = colorOptions[i].value;
+      var colorAvailable = availableColors.includes(color);
+
+      // Get the label associated with the current color option
+      var label = document.querySelector('label[for="' + colorOptions[i].id + '"]');
+
+      if (colorAvailable) {
+        colorOptions[i].style.display = 'inline-block';
+        label.style.display = 'inline-block';
+      } else {
+        colorOptions[i].style.display = 'none';
+        colorOptions[i].checked = false;
+        label.style.display = 'none';
+      }
+    }
+  }
+
+  function handleAddToCartClick() {
+    var selectedSize = document.querySelector('input[name="size"]:checked');
+    var selectedColor = document.querySelector('input[name="color"]:checked');
+    var quantity = parseInt(document.getElementById('quantity').value);
+
+    if (!selectedSize || !selectedColor || isNaN(quantity) || quantity <= 0) {
+      console.error('Please select size, color, and enter a valid quantity.');
+      return;
+    }
+
+    var productInfo = {
+      name: "<%= @product.name %>",
+      size: selectedSize.value,
+      color: selectedColor.value,
+      quantity: quantity,
+      price: "<%= @product.price %>"
+    };
+
+    try {
+      var cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
+      var existingProductIndex = cartProducts.findIndex(function (cartProduct) {
+        return cartProduct.name === productInfo.name &&
+          cartProduct.size === productInfo.size &&
+          cartProduct.color === productInfo.color &&
+          cartProduct.price === productInfo.price;
+      });
+
+      if (existingProductIndex !== -1) {
+        cartProducts[existingProductIndex].quantity += quantity;
+      } else {
+        cartProducts.push(productInfo);
+      }
+
+      localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
+      console.log('Product info successfully stored in local storage:', productInfo);
+      alert('Sản phẩm đã được thêm vào giỏ hàng!');
+    } catch (error) {
+      console.error('Error storing product info in local storage:', error);
+    }
+  }
+</script>
+</div>
+</div>
