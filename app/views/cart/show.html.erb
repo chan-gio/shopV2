@@ -1,4 +1,5 @@
-  <div class='wrapper'>
+      <%= render partial: "shared/navbar"%>
+<div class='wrapper'>
   <!DOCTYPE html>
   <html lang="vn">
       <meta charset="UTF-8">
@@ -100,7 +101,7 @@
         <!-- Display total price -->
         <p>Total Price: <span id="total-price"></span>đ</p>
         <!-- Button to clear the cart -->
-        <button id="clear-cart-btn" class="btn btn-primary">Xoá giỏ hàng</button>
+        <button id="clear-cart-btn" class="btn btn-primary" onclick="clearCart()">Xoá giỏ hàng</button>
         <!-- Link to check out -->
         <button id="receipt-btn" class="btn btn-primary" onclick="redirectToPayment()">Thanh toán</button>
       </div>
@@ -135,6 +136,12 @@
                         break;
                 }
             }
+
+                 function clearCart() {
+                  // Add logic to clear the cart
+                  localStorage.removeItem('cartProducts');
+                  updateDisplay(); // Update the display after clearing the cart
+                 }
 
             function getSelectedPaymentMethod() {
                 var radioButtons = document.getElementsByName('Payment_method');
@@ -177,24 +184,25 @@
                 localStorage.setItem('totalPrice', total);
               }
             function addProductToCartList(product, index) {
-                var cartList = document.getElementById('cart-list');
-                var listItem = document.createElement('li');
-                listItem.textContent = `${product.name} - Size: ${product.size}, Color: ${product.color}, Quantity: ${product.quantity}, Price: ${product.price}`;
+                      var cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
+                      var cartList = document.getElementById('cart-list');
+                      var listItem = document.createElement('li');
+                      listItem.textContent = `${product.name} - Size: ${product.size}, Color: ${product.color}, Quantity: ${product.quantity}, Price: ${product.price}`;
 
-                var removeButton = document.createElement('button');
-                removeButton.textContent = 'X';
-                removeButton.className = 'btn btn-danger';
-                removeButton.dataset.index = index;
-                removeButton.addEventListener('click', function () {
-                    var indexToRemove = parseInt(removeButton.dataset.index, 10);
-                    cartProducts.splice(indexToRemove, 1);
-                    localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
-                    updateDisplay(); // Update the display after removing an item
-                });
+                      var removeButton = document.createElement('button');
+                      removeButton.textContent = 'X';
+                      removeButton.className = 'btn btn-danger';
+                      removeButton.dataset.index = index;
+                      removeButton.addEventListener('click', function () {
+                          var indexToRemove = parseInt(removeButton.dataset.index, 10);
+                          cartProducts.splice(indexToRemove, 1);
+                          localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
+                          updateDisplay(); // Update the display after removing an item
+                      });
 
-                listItem.appendChild(removeButton);
-                cartList.appendChild(listItem);
-            }
+                      listItem.appendChild(removeButton);
+                      cartList.appendChild(listItem);
+                  }
 
             document.addEventListener('turbo:load', function () {
                 try {
@@ -290,4 +298,6 @@
   
   </body>
 </html>
+
 </div>
+    <%= render partial: "shared/footer"%>

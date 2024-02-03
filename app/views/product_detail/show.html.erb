@@ -1,3 +1,4 @@
+      <%= render partial: "shared/navbar"%>
 <div class='wrapper'>
 <div class="text-center">
   <div style="float: left; margin-right: 20px;">
@@ -100,7 +101,9 @@
       size: selectedSize.value,
       color: selectedColor.value,
       quantity: quantity,
-      price: "<%= @product.price %>"
+      price: "<%= @product.price %>",
+      id: "<%= @product.id %>",
+      image: "<%= @product.image %>"
     };
 
     try {
@@ -109,7 +112,9 @@
         return cartProduct.name === productInfo.name &&
           cartProduct.size === productInfo.size &&
           cartProduct.color === productInfo.color &&
-          cartProduct.price === productInfo.price;
+          cartProduct.price === productInfo.price &&
+          cartProduct.id === productInfo.id &&
+          cartProduct.image === productInfo.image;
       });
 
       if (existingProductIndex !== -1) {
@@ -128,3 +133,6 @@
 </script>
 </div>
 </div>
+    <%= render partial: "shared/footer"%>
+
+

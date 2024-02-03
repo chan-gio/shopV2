@@ -1,0 +1,111 @@
+<div style="display: flex; height=100%" >
+  <div class="flex1">
+    <div class="admin-taskbar" id="taskbar">
+        <%= link_to admin_products_path, id: 'product-link', class:'link' do %>
+      <div class="taskbar-cb image-container">
+          <%= image_tag 'product_icon.png', class: 'view-icon' %>
+          <div class="taskbar-t">Sản phẩm</div>
+      </div>
+        <% end %>
+        <%= link_to admin_receipts_path, id: 'receipt-link', class:'link' do %>
+      <div class="taskbar-cb image-container">
+          <%= image_tag 'receipt_icon.png', class: 'view-icon' %>
+          <div class="taskbar-t">Hoá đơn</div>
+      </div>
+        <% end %>
+        <%= link_to admin_users_path, id: 'user-link', class:'link' do %>
+      <div class="taskbar-cb image-container">
+          <%= image_tag 'user_icon.png', class: 'view-icon' %>
+          <div class="taskbar-t">Người dùng</div>
+      </div>
+        <% end %>
+        <%= link_to admin_feedbacks_path, id: 'feedback-link', class:'link' do %>
+      <div class="taskbar-cb image-container">
+          <%= image_tag 'feedback_icon.png', class: 'view-icon' %>
+          <div class="taskbar-t">Đánh giá</div>
+      </div>
+        <% end %>
+    </div>
+  </div>
+
+<div>
+  
+</div>
+</div>
+
+  <%# <style>
+#taskbar-container {
+  position: relative;
+  overflow: hidden;
+  height: 0;
+  transition: height 0.3s;
+}
+
+#taskbar-container:hover #taskbar {
+  height: auto;
+}
+
+div.admin-taskbar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* background-color: #e3e3e3; */
+}
+
+.admin-taskbar a {
+  color: #fff;
+  text-decoration: none;
+  margin-bottom: 2px;
+  padding: 0;
+}
+
+.view-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.taskbar-cb {
+  width: 100%;
+}
+
+.taskbar-cb:hover {
+  background-color: red; /* Đổi màu khi di chuột vào */
+  opacity: 1; /* Nếu muốn làm cho dòng đang được chọn trở nên rõ hơn */
+}
+
+.flex7{
+  flex: 7;
+  border-left:1px solid #ccc;
+}
+
+.flex1 {
+  max-height: 100%;
+  background-color: #e3e3e3;
+  transition: width 1s;
+  width:40px
+}
+.flex1:hover{
+  width: 250px;
+  .taskbar-t{
+    display:flex;
+    align-items: center;
+    width: 100%
+    }
+}
+.taskbar-t{
+  white-space: nowrap; /* Ngăn chữ xuống dòng khi kích thước lớn hơn */
+  text-overflow: ellipsis; /* Hiển thị dấu elipsis (…) khi chữ quá dài */
+  transition: width 1s;
+  width: 100%;
+  display:none
+}
+
+.image-container {
+  position: relative;
+  display:flex
+}
+.link{
+  width: 100%;
+}
+
+  </style> %>

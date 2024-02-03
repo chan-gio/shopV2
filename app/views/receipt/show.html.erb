@@ -1,3 +1,4 @@
+      <%= render partial: "shared/navbar"%>
 <div class='wrapper'>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +16,6 @@
       <h1 class="icon">icon</h1>
       <div class="receipt_info">
         <h1>Hoá đơn</h1>
-        <p>Ngày lập</p>
       </div>
     </div>
 
@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
   var userInfo = JSON.parse(localStorage.getItem('userInfo')) || {};
   // Lấy dữ liệu từ localStorage
+  var saveCartProducts = localStorage.getItem('cartProducts');
   var saveUserInfo = localStorage.getItem('userInfo');
   var totalPrice = totalPriceElement.innerText;
 
@@ -78,6 +79,18 @@ document.addEventListener('DOMContentLoaded', function () {
     success: function(response) {
       console.log('Server response:', response);
       // Xử lý phản hồi từ server (nếu cần)
+    }
+  });
+
+   $.ajax({
+    type: 'POST',
+    url: '/product_receipt/save_data', // Replace with the actual URL of your other server
+    contentType: 'application/json',
+    data:saveCartProducts,
+    success: function(response) {
+      console.log('Server 2 response:', response);
+      localStorage.removeItem('cartProducts');
+      localStorage.removeItem('totalPrice');
     }
   });
 
@@ -108,9 +121,6 @@ document.addEventListener('DOMContentLoaded', function () {
     userInfoNoteSpan.textContent = userInfo.note || '';
     userInfoPaymentMethodSpan.textContent = userInfo.paymentMethod ? userInfo.paymentMethod.name : '';
   }
-  // Log userInfo for debugging
-  console.log('User Info:', userInfo);
-
   // Function to add product to the receipt list
   function addProductToReceiptList(product, index) {
     if (!receiptBody) {
@@ -138,3 +148,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
   </html>
 </div>
+    <%= render partial: "shared/footer"%>

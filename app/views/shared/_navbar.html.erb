@@ -21,6 +21,23 @@
       </form>
     </div>
   </div>
+   <ul class="navbar-nav ms-auto mb-2 mb-lg-0"> 
+        <% if Current.user %>
+        <li class="nav-item">
+            <span class="navbar-text"><%= Current.user.email %></span>
+        </li>
+        <li class="nav-item">
+        <%= button_to "logout", logout_path, method: :delete, class: "btn btn-outline-secondary" %>
+        </li>
+        <% else %>
+        <li class="nav-item">
+            <%= link_to "Login", login_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+            <%= link_to "Sign up", sign_up_path, class: "nav-link" %>
+        </li>
+        <% end %>
+        </ul>
 <%= link_to cart_path, id: 'cart-link' do %>
   <%= image_tag 'cart.png', alt: 'Giỏ hàng', class: 'view-cart-btn' %>
 <% end %>

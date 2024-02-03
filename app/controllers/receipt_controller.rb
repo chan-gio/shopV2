@@ -9,7 +9,6 @@ class ReceiptController < ApplicationController
       raw_data = request.body.read
       receipt_data = JSON.parse(raw_data)
       Rails.logger.info("Receipt_data: #{receipt_data}")
-      # binding.pry
       # Create a new Receipt record and save it to the database
       receipt = Receipt.new(
         cname: receipt_data['name'],
@@ -22,6 +21,7 @@ class ReceiptController < ApplicationController
         payment_method: receipt_data['paymentMethod']['name'],
         total: receipt_data['totalPrice']
         )
+        
       if receipt.save
         render json: { status: 'success', message: 'Dữ liệu đã được lưu thành công' }
       else

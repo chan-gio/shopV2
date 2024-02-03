@@ -1,2 +1,0 @@
-class Recepit < ApplicationRecord
-end
